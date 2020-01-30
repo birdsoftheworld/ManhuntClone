@@ -51,10 +51,12 @@ public class PlayerTracker implements Listener {
 
         if(player.getInventory().getItemInMainHand().getType() == Material.COMPASS && isTracking) {
             if(player.equals(tracker)) {
-                if(cooldown.hasTimePassed(2500)) {
+                if(cooldown.hasTimePassed(3000)) {
                     player.sendMessage(ChatColor.GREEN.toString() + "Compass set to tracked.");
-                    player.setCompassTarget(tracked.getLocation());
                     cooldown.setTimeToNow();
+                    if(player.getWorld().getEnvironment().equals(tracked.getWorld().getEnvironment())) {
+                        player.setCompassTarget(tracked.getLocation());
+                    }
                 }
             }
         }

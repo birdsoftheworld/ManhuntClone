@@ -2,10 +2,12 @@ package birds.manhuntclone.ManhuntClone;
 
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
+import org.bukkit.Material;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
+import org.bukkit.inventory.ItemStack;
 
 public class TrackCommand implements CommandExecutor {
     private PlayerTracker playerTracker;
@@ -41,8 +43,11 @@ public class TrackCommand implements CommandExecutor {
         playerTracker.setTracked(selectedPlayer);
         playerTracker.setTracking(true);
 
-        sender.sendMessage(ChatColor.GREEN.toString() + "Now tracking " + sender.getName() + ".");
+        sender.sendMessage(ChatColor.GREEN.toString() + "Now tracking " + selectedPlayer.getName() + ".");
         selectedPlayer.sendMessage(ChatColor.GOLD.toString() + "You are now being tracked by " + sender.getName() + ".");
+
+        // give the tracker a compass
+        ((Player) sender).getInventory().addItem(new ItemStack(Material.COMPASS, 1));
 
         return true;
     }
