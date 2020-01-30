@@ -1,6 +1,5 @@
 package birds.manhuntclone.ManhuntClone;
 
-import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
@@ -9,6 +8,8 @@ import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.event.player.PlayerQuitEvent;
+import org.bukkit.event.player.PlayerRespawnEvent;
+import org.bukkit.inventory.ItemStack;
 
 public class PlayerTracker implements Listener {
 
@@ -68,6 +69,16 @@ public class PlayerTracker implements Listener {
             this.tracker = null;
             this.tracked = null;
             isTracking = false;
+        }
+    }
+
+    @EventHandler
+    public void onPlayerRespawn(PlayerRespawnEvent event) {
+        // give tracker compass on respawn
+        Player player = event.getPlayer();
+
+        if(player.equals(tracker)) {
+            player.getInventory().addItem(new ItemStack(Material.COMPASS, 1));
         }
     }
 }
