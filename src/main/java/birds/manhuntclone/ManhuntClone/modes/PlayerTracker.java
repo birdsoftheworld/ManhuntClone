@@ -1,5 +1,6 @@
-package birds.manhuntclone.ManhuntClone;
+package birds.manhuntclone.ManhuntClone.modes;
 
+import birds.manhuntclone.ManhuntClone.util.Cooldown;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
@@ -15,27 +16,27 @@ public class PlayerTracker implements Listener {
 
     private Cooldown cooldown = new Cooldown();
 
-    void setTracker(Player tracker) {
+    public void setTracker(Player tracker) {
         this.tracker = tracker;
     }
 
-    void setTracked(Player tracked) {
+    public void setTracked(Player tracked) {
         this.tracked = tracked;
     }
 
-    void setTracking(boolean tracking) {
+    public void setTracking(boolean tracking) {
         isTracking = tracking;
     }
 
-    Player getTracker() {
+    public Player getTracker() {
         return tracker;
     }
 
-    Player getTracked() {
+    public Player getTracked() {
         return tracked;
     }
 
-    boolean isTracking() {
+    public boolean isTracking() {
         return isTracking;
     }
 

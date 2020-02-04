@@ -1,4 +1,4 @@
-package birds.manhuntclone.ManhuntClone;
+package birds.manhuntclone.ManhuntClone.util;
 
 public class Cooldown {
     public long getCurrentSetTime() {
@@ -11,7 +11,7 @@ public class Cooldown {
 
     private long currentSetTime;
 
-    Cooldown() {
+    public Cooldown() {
         this.currentSetTime = System.currentTimeMillis();
     }
 
@@ -23,7 +23,7 @@ public class Cooldown {
         return System.currentTimeMillis() - this.currentSetTime >= (long) time;
     }
 
-    void setTimeToNow() {
+    public void setTimeToNow() {
         this.currentSetTime = System.currentTimeMillis();
     }
 }

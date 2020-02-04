@@ -1,5 +1,6 @@
-package birds.manhuntclone.ManhuntClone;
+package birds.manhuntclone.ManhuntClone.commands;
 
+import birds.manhuntclone.ManhuntClone.modes.PlayerTracker;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
@@ -12,7 +13,7 @@ import org.bukkit.inventory.ItemStack;
 public class TrackCommand implements CommandExecutor {
     private PlayerTracker playerTracker;
 
-    TrackCommand(PlayerTracker playerTracker) {
+    public TrackCommand(PlayerTracker playerTracker) {
         this.playerTracker = playerTracker;
     }
 

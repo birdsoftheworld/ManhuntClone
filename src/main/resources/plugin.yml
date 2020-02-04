@@ -1,8 +1,12 @@
 name: ManhuntClone
-version: 1.0.0
+version: 1.2.0
 main: birds.manhuntclone.ManhuntClone.ManhuntClone
 commands:
   track:
     usage: /track player
   untrack:
     usage: /untrack
+  seek:
+    usage: /seek player
+  unseek:
+    usage: /unseek player
