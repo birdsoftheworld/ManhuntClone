@@ -2,17 +2,22 @@ package birds.manhuntclone.ManhuntClone.commands;
 
 import birds.manhuntclone.ManhuntClone.ManhuntClone;
 import birds.manhuntclone.ManhuntClone.modes.RaytraceCommand;
+import birds.manhuntclone.ManhuntClone.util.SeekData;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
+import org.bukkit.scheduler.BukkitRunnable;
 
 public class UnseekCommand extends RaytraceCommand implements CommandExecutor {
 
-    public UnseekCommand(ManhuntClone manhuntClone) {
-        super(manhuntClone);
+    private SeekData seekData;
+
+    public UnseekCommand(ManhuntClone manhuntClone, SeekData seekData) {
+        super(manhuntClone, seekData);
+        this.seekData = seekData;
     }
 
     @Override
@@ -38,24 +43,27 @@ public class UnseekCommand extends RaytraceCommand implements CommandExecutor {
             return false;
         }
 
-        if (!((Player) sender).getDisplayName().equals(getSeeker().getDisplayName())) {
+        Player seeker = seekData.getSeeker();
+        Player hider = seekData.getHider();
+
+        if (!((Player) sender).getDisplayName().equals(seeker.getDisplayName())) {
             sender.sendMessage(ChatColor.RED.toString() + "Sender must be the seeker!" + ChatColor.RESET.toString());
             return false;
         }
 
-        if (!selectedPlayer.getDisplayName().equals(getHider().getDisplayName())) {
+        if (!selectedPlayer.getDisplayName().equals(hider.getDisplayName())) {
             sender.sendMessage(ChatColor.RED.toString() + "Player must be the hider!" + ChatColor.RESET.toString());
             return false;
         }
 
         stopRunnable();
 
-        setHider(null);
-        setSeeker(null);
-        setSeeking(false);
+        seekData.setHider(null);
+        seekData.setSeeker(null);
+        seekData.setSeeking(false);
 
-        getSeeker().sendMessage(ChatColor.GREEN.toString() + "You have stopped seeking " + getHider().getDisplayName() + ChatColor.RESET.toString());
-        getHider().sendMessage(ChatColor.GREEN.toString() + getSeeker().getDisplayName() + " has stopped seeking you" + ChatColor.RESET.toString());
+        seeker.sendMessage(ChatColor.GREEN.toString() + "You have stopped seeking " + hider.getDisplayName() + ChatColor.RESET.toString());
+        hider.sendMessage(ChatColor.GREEN.toString() + seeker.getDisplayName() + " has stopped seeking you" + ChatColor.RESET.toString());
 
         return true;
     }

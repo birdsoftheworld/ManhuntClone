@@ -2,6 +2,7 @@ package birds.manhuntclone.ManhuntClone.commands;
 
 import birds.manhuntclone.ManhuntClone.ManhuntClone;
 import birds.manhuntclone.ManhuntClone.modes.RaytraceCommand;
+import birds.manhuntclone.ManhuntClone.util.SeekData;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.command.Command;
@@ -15,10 +16,12 @@ public class SeekCommand extends RaytraceCommand implements CommandExecutor {
 
     private ManhuntClone manhuntClone;
     private BukkitRunnable raytraceRunner;
+    private SeekData seekData;
 
-    public SeekCommand(ManhuntClone manhuntClone) {
-        super(manhuntClone);
+    public SeekCommand(ManhuntClone manhuntClone, SeekData seekData) {
+        super(manhuntClone, seekData);
         this.manhuntClone = manhuntClone;
+        this.seekData = seekData;
     }
 
     @Override
@@ -44,9 +47,12 @@ public class SeekCommand extends RaytraceCommand implements CommandExecutor {
             return false;
         }
 
-        setSeeker((Player) sender);
-        setHider(selectedPlayer);
-        setSeeking(true);
+        sender.sendMessage(ChatColor.GREEN.toString() + "You are now seeking " + selectedPlayer.getDisplayName() + ChatColor.RESET.toString());
+        selectedPlayer.sendMessage(ChatColor.RED.toString() + ((Player) sender).getDisplayName() + " is now seeking you" + ChatColor.RESET.toString());
+
+        seekData.setSeeker((Player) sender);
+        seekData.setHider(selectedPlayer);
+        seekData.setSeeking(true);
 
         startRunnable();
 
