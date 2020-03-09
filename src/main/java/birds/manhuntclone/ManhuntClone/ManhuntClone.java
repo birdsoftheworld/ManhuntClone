@@ -1,9 +1,6 @@
 package birds.manhuntclone.ManhuntClone;
 
-import birds.manhuntclone.ManhuntClone.commands.SeekCommand;
-import birds.manhuntclone.ManhuntClone.commands.TrackCommand;
-import birds.manhuntclone.ManhuntClone.commands.UnseekCommand;
-import birds.manhuntclone.ManhuntClone.commands.UntrackCommand;
+import birds.manhuntclone.ManhuntClone.commands.*;
 import birds.manhuntclone.ManhuntClone.modes.PlayerTracker;
 import birds.manhuntclone.ManhuntClone.util.SeekData;
 import org.bukkit.plugin.java.JavaPlugin;
@@ -25,6 +22,8 @@ public class ManhuntClone extends JavaPlugin {
         SeekData seekData = new SeekData();
         this.getCommand("seek").setExecutor(new SeekCommand(this, seekData));
         this.getCommand("unseek").setExecutor(new UnseekCommand(this, seekData));
+        this.getCommand("swap").setExecutor(new DeathSwapCommand(this));
+        this.getCommand("unswap").setExecutor(new DeathSwapCommand(this));
     }
 
     @Override

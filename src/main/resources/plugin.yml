@@ -10,3 +10,7 @@ commands:
     usage: /seek player
   unseek:
     usage: /unseek player
+  swap:
+    usage: /swap interval
+  unswap:
+    usage: /unswap

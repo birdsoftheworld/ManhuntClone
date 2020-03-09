@@ -9,6 +9,8 @@ import org.bukkit.entity.Player;
 import org.bukkit.scheduler.BukkitRunnable;
 import org.bukkit.util.RayTraceResult;
 
+import java.util.Objects;
+
 public class RaytraceCommand {
 
     private ManhuntClone manhuntClone;
@@ -28,7 +30,7 @@ public class RaytraceCommand {
                 Player seeker = seekData.getSeeker();
                 Player hider = seekData.getHider();
                 if (seeker == null || hider == null) return;
-                RayTraceResult result = hider.getBoundingBox().rayTrace(seeker.getPlayer().getEyeLocation().toVector(), seeker.getPlayer().getEyeLocation().getDirection(), 100);
+                RayTraceResult result = hider.getBoundingBox().rayTrace(Objects.requireNonNull(seeker.getPlayer()).getEyeLocation().toVector(), seeker.getPlayer().getEyeLocation().getDirection(), 100);
                 if (result == null) return;
                 seeker.sendMessage(ChatColor.GOLD.toString() + "You have spotted " + hider.getDisplayName() + ChatColor.RESET.toString());
                 hider.sendMessage(ChatColor.RED.toString() + "You have been spotted by " + seeker.getPlayer().getDisplayName() + ChatColor.RESET.toString());
