@@ -1,29 +1,26 @@
 package birds.manhuntclone.ManhuntClone.util;
 
+import org.bukkit.entity.Player;
+
+import java.util.HashMap;
+import java.util.Map;
+
 public class Cooldown {
-    public long getCurrentSetTime() {
-        return currentSetTime;
+    public long getCurrentSetTime(Player player) {
+        return currentSetTime.get(player);
     }
 
-    public void setCurrentSetTime(long millisecondsSinceLastSet) {
-        this.currentSetTime = millisecondsSinceLastSet;
+    public void setCurrentSetTime(Player player, long millisecondsSinceLastSet) {
+        this.currentSetTime.put(player, millisecondsSinceLastSet);
     }
 
-    private long currentSetTime;
+    private Map<Player, Long> currentSetTime = new HashMap<>();
 
-    public Cooldown() {
-        this.currentSetTime = System.currentTimeMillis();
+    public boolean hasTimePassed(Player player, long time) {
+        return Math.abs(this.currentSetTime.get(player) - System.currentTimeMillis()) >= time;
     }
 
-    public boolean hasTimePassed(long time) {
-        return this.currentSetTime - System.currentTimeMillis() >= time;
-    }
-
-    boolean hasTimePassed(int time) {
-        return System.currentTimeMillis() - this.currentSetTime >= (long) time;
-    }
-
-    public void setTimeToNow() {
-        this.currentSetTime = System.currentTimeMillis();
+    public void setTimeToNow(Player player) {
+        this.currentSetTime.put(player, System.currentTimeMillis());
     }
 }

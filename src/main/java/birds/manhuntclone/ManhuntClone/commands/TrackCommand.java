@@ -1,6 +1,8 @@
 package birds.manhuntclone.ManhuntClone.commands;
 
 import birds.manhuntclone.ManhuntClone.modes.PlayerTracker;
+import net.md_5.bungee.api.ChatMessageType;
+import net.md_5.bungee.api.chat.ComponentBuilder;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
@@ -34,21 +36,18 @@ public class TrackCommand implements CommandExecutor {
 
         Player selectedPlayer = Bukkit.getServer().getPlayer(args[0]);
 
+        Player playerSender = (Player) sender;
+
         // make sure player is online
         if (selectedPlayer == null) {
-            sender.sendMessage(ChatColor.RED.toString() + "That player is not online.");
+            playerSender.sendMessage(ChatColor.RED.toString() + "That player is not online.");
             return false;
         }
 
-        playerTracker.setTracker((Player) sender);
-        playerTracker.setTracked(selectedPlayer);
-        playerTracker.setTracking(true);
-
-        sender.sendMessage(ChatColor.GREEN.toString() + "Now tracking " + selectedPlayer.getName() + ".");
-        selectedPlayer.sendMessage(ChatColor.GOLD.toString() + "You are now being tracked by " + sender.getName() + ".");
+        playerTracker.trackPlayer(playerSender, selectedPlayer);
 
         // give the tracker a compass
-        ((Player) sender).getInventory().addItem(new ItemStack(Material.COMPASS, 1));
+        playerTracker.givePlayerCompass(playerSender);
 
         return true;
     }

@@ -3,11 +3,13 @@ package birds.manhuntclone.ManhuntClone;
 import birds.manhuntclone.ManhuntClone.commands.*;
 import birds.manhuntclone.ManhuntClone.modes.PlayerTracker;
 import birds.manhuntclone.ManhuntClone.util.SeekData;
+import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.plugin.java.JavaPlugin;
 
 @SuppressWarnings("ConstantConditions")
 public class ManhuntClone extends JavaPlugin {
-    private PlayerTracker playerTracker = new PlayerTracker();
+    private PlayerTracker playerTracker = new PlayerTracker(this);
+    public FileConfiguration config = getConfig();
 
     @Override
     public void onEnable() {
@@ -15,6 +17,15 @@ public class ManhuntClone extends JavaPlugin {
         getLogger().info("Manhunt enabled.");
 
         getServer().getPluginManager().registerEvents(playerTracker, this);
+
+        // config options
+        config.addDefault("updateCompassAutomatically", true);
+        config.addDefault("compassCooldown", 1000);
+        config.addDefault("compassUpdateInterval", 20);
+        config.options().copyDefaults(true);
+        saveConfig();
+
+        playerTracker.startRunnable(config.getInt("compassUpdateInterval"));
 
         // commands
         this.getCommand("track").setExecutor(new TrackCommand(playerTracker));
